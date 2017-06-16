@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    public $timestamps = false;
+    const CREATED_AT = 'roleCreatedAt';
+    const UPDATED_AT = 'roleUpdatedAt';
     protected $primaryKey = "roleId";
 }
