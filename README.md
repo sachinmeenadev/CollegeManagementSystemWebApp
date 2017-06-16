@@ -7,46 +7,44 @@ This is a small College ERP system demo web application. It is the first demo ve
 	>For Andoid Application of this go to https://github.com/sachinmeenadev/CollegeManagementSystem/
 
 #### Structure of project (Functional Requirements)
-    1. Splash
-	2. Shared preference
-	3. Login
-	5. Welcome
-	6. Faculty (By class selection, default shown own class)
-		6.1 Student List
-		//Can see list of students of particular class or section
-		6.2 Student Profile
-		//Can see individual student profile
-		6.3 Student Update
-		//Can update individual student profile
-	7. Placement (Only having placement access)
-		7.1 Student List
-			7.1.1 By Criteria
-			//Like Medium of language, Percentage criteria
-			7.1.2 By Specific Student
-			//By names, etc
-		7.2 Student Profile
-		//For checking individual student for their eligibility 
-		7.3 Student Volunteer
-		//Can check list of students, who can help in placement related activities
-	8. HOD
-		8.1 Student List
-			8.1.1 By class selection
-			8.1.2 By Criteria (Placement eligibility)
-			8.1.3 By Specific Student
-		8.2 Student Profile
-		8.3 Tutor list
-		8.4 Faculty List	
-			8.4.1 Subject Wise
-			8.4.2 Class Wise
-		8.5 Assign tutor
-		8.6 Assign faculty
-	9. Admin
-		9.1 Manage Roles
-		9.2 Manage College Branches list
-		9.3 Manage Subjects list
-		9.4 Manage Users list		
-		9.5 Manage Faculty Members list
+    1. Welcome
+	2. Admin
+   		2.1 Manage Roles
+   		2.2 Manage College Branches list
+   		2.3 Manage Subjects list
+   		2.4 Manage Users list		
+   		2.5 Manage Faculty Members list
 
+	3. HOD
+		3.1 Student List
+			3.1.1 By class selection
+			3.1.2 By Criteria (Placement eligibility)
+			3.1.3 By Specific Student
+		3.2 Student Profile
+		3.3 Tutor list
+		3.4 Faculty List	
+			3.4.1 Subject Wise
+			3.4.2 Class Wise
+		3.5 Assign tutor
+		3.6 Assign faculty
+	4. Faculty (By class selection, default shown own class)
+        4.1 Student List
+        //Can see list of students of particular class or section
+        4.2 Student Profile
+        //Can see individual student profile
+        4.3 Student Update
+        //Can update individual student profile
+    5. Placement (Only having placement access)
+        5.1 Student List
+            5.1.1 By Criteria
+            //Like Medium of language, Percentage criteria
+            5.1.2 By Specific Student
+            //By names, etc
+        5.2 Student Profile
+        //For checking individual student for their eligibility 
+        5.3 Student Volunteer
+        //Can check list of students, who can help in placement related activities
+    	
 #### Project database structure
     > All column name ending with Id are INTEGER Type, rest all are VARCHAR
 
@@ -56,12 +54,14 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->userEmail
 		->userPassword
 		->userRoleId
-    ->userCreatedAt
+        ->userCreatedAt
+        ->userUpdatedAt
 		
 	*roles
 		->roleId
 		->roleType
 		->roleCreatedAt
+		->roleUpdatedAt
 		
 	*student 
 		->studentId
@@ -96,8 +96,9 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->studentCountry
 		->studentPinCode
 		->studentCreatedAt
+		->studentUpdatedAt
 		
-	*studentAcademics
+	*student_academics
 		->studentAcademicId
 		->studentAcademicStudentId
 		->studentAcademicSecPercentage
@@ -117,12 +118,14 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->studentAcademicCollegeBackSubject
 		->studentAcademicHobbies
 		->studentAcademicCreatedAt
+		->studentAcademicUpdatedAt
 		
-	*collegeBranches
+	*college_branches
 		->collegeBranchId
 		->collegeBranchName
 		->collegeBranchAbbr		
 		->collegeBranchCreatedAt
+		->collegeBranchUpdatedAt
 		
 	*tutors
 		->tutorId
@@ -130,8 +133,9 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->tutorSection
 		->tutorBatch
 		->tutorCreatedAt
+		->tutorUpdatedAt
 		
-	*facultyMembers
+	*faculty_members
 		->facultyMemberId
 		->facultyMemberName
 		->facultyMemberBranchId
@@ -139,6 +143,7 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->facultyMemberContact
 		->facultyMemberEmail
 		->facultyMemberCreatedAt
+		->facultyMemberUpdatedAt
 		
 	*subjects
 		->subjectId
@@ -146,12 +151,14 @@ This is a small College ERP system demo web application. It is the first demo ve
 		->subjectAbbr
 		->subjectCode
 		->subjectCreatedAt
+		->subjectUpdatedAt
 		
-	*facultyMemberSubjects
+	*faculty_member_subjects
 		->fmsId
 		->fmsFacultyId
 		->fmsSubjectId
 		->fmsSubjectCreatedAt
+		->fmsSubjectUpdatedAt
 
 #### Project configuration
     Framework Version => 5.4

@@ -41,7 +41,6 @@ class LoginController extends Controller
                     $response["user"]["userName"] = $data->userName;
                     $response["user"]["userEmail"] = $data->userEmail;
                     $response["user"]["userRole"] = $data->roleType;
-                    $response["user"]["userCreatedAt"] = $data->userCreatedAt;;
                 }
             } else {
                 $response["error"] = TRUE;
@@ -61,9 +60,7 @@ class LoginController extends Controller
      */
     public function checkHashSSHA($salt, $password)
     {
-
         $hash = base64_encode(sha1($password . $salt, true) . $salt);
-
         return $hash;
     }
 
@@ -89,7 +86,7 @@ class LoginController extends Controller
             $response["error_msg"] = "Successfully Registered";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unable to register. Please try again!";
+            $response["error_msg"] = "Unknown error occurred in registration. Please try again!";
         }
         return $response;
     }
@@ -101,7 +98,6 @@ class LoginController extends Controller
      */
     public function hashSSHA($password)
     {
-
         $salt = sha1(rand());
         $salt = substr($salt, 0, 10);
         $encrypted = base64_encode(sha1($password . $salt, true) . $salt);
