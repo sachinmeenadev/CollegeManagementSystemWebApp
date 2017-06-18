@@ -20,10 +20,22 @@ Route::middleware('api')->post('/register', [
     'as' => 'appRegister',
     'uses' => 'Api\LoginController@register'
 ]);
-
+//==========================================================//
+/*
+|--------------------------------------------------------------
+| For all Admin routes
+|--------------------------------------------------------------
+|Here we will have all the routes for Admin panel of Mobile Application
+*/
+//Role Creation Routes
 Route::prefix('admin')->group(function () {
     Route::get('roles', [
-        'as' => 'apiAdminRole',
-        'uses' => 'Api\AdminController@getRoles'
+        'as' => 'apiAdminGetRole',
+        'uses' => 'Api\AdminController@getRole'
+    ]);
+    Route::post('roles', [
+        'as' => 'apiAdminInsertRole',
+        'uses' => 'Api\AdminController@insertRole'
     ]);
 });
+//=========================================================//
