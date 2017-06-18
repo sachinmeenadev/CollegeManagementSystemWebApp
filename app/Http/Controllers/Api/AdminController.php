@@ -38,14 +38,47 @@ class AdminController extends Controller
         $data[] = array(
             'roleType' => $request->roleType,
             'roleCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'roleUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
         );
         $status = App\Role::insert($data);
         if ($status == 1) {
             $response["error"] = FALSE;
-            $response["error_msg"] = "Successfully Registered";
+            $response["error_msg"] = "Successfully Created";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in registration. Please try again!";
+            $response["error_msg"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateRole(Request $request, $id)
+    {
+        dd($request->request);
+        $data[] = array(
+            'roleType' => $request->roleType,
+            'roleUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        dd($data);
+        $status = App\Role::where('roleId', '=', $id)->insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["error_msg"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["error_msg"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function deleteRole($id)
+    {
+        $status = App\Role::where('roleId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["error_msg"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["error_msg"] = "Unknown error occurred in deleting. Please try again!";
         }
         return $response;
     }

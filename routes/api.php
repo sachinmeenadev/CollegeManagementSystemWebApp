@@ -37,5 +37,13 @@ Route::prefix('admin')->group(function () {
         'as' => 'apiAdminInsertRole',
         'uses' => 'Api\AdminController@insertRole'
     ]);
+    Route::put('roles/{id}', [
+        'as' => 'apiAdminUpdateRole',
+        'uses' => 'Api\AdminController@updateRole'
+    ]);
+    Route::delete('roles/{id}', [
+        'as' => 'apiAdminDeleteRole',
+        'uses' => 'Api\AdminController@deleteRole'
+    ]);
 });
 //=========================================================//
