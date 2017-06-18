@@ -53,7 +53,6 @@ class AdminController extends Controller
 
     public function updateRole(Request $request, $id)
     {
-        dd($request->request);
         $data[] = array(
             'roleType' => $request->roleType,
             'roleUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
