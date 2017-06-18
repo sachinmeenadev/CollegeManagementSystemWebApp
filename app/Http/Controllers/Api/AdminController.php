@@ -27,8 +27,8 @@ class AdminController extends Controller
             $response["error"] = FALSE;
             $response["roles"] = $roles;
         } else {
-            $response["error"] = FALSE;
-            $response["error_msg"] = "No entry in database";
+            $response["message"] = FALSE;
+            $response["message"] = "No entry in database";
         }
         return $response;
     }
@@ -43,10 +43,10 @@ class AdminController extends Controller
         $status = App\Role::insert($data);
         if ($status == 1) {
             $response["error"] = FALSE;
-            $response["error_msg"] = "Successfully Created";
+            $response["message"] = "Successfully Created";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in creation. Please try again!";
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
         }
         return $response;
     }
@@ -61,10 +61,10 @@ class AdminController extends Controller
         $status = App\Role::where('roleId', '=', $id)->insert($data);
         if ($status == 1) {
             $response["error"] = FALSE;
-            $response["error_msg"] = "Successfully Created";
+            $response["message"] = "Successfully Created";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in creation. Please try again!";
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
         }
         return $response;
     }
@@ -74,10 +74,10 @@ class AdminController extends Controller
         $status = App\Role::where('roleId', '=', $id)->delete();
         if ($status == 1) {
             $response["error"] = FALSE;
-            $response["error_msg"] = "Successfully deleted";
+            $response["message"] = "Successfully deleted";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in deleting. Please try again!";
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
         }
         return $response;
     }

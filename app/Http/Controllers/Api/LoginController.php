@@ -44,11 +44,11 @@ class LoginController extends Controller
                 }
             } else {
                 $response["error"] = TRUE;
-                $response["error_msg"] = "Login credentials are wrong. Please try again!";
+                $response["message"] = "Login credentials are wrong. Please try again!";
             }
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "No user found. Please try again!";
+            $response["message"] = "No user found. Please try again!";
         }
         return $response;
     }
@@ -83,10 +83,10 @@ class LoginController extends Controller
         $status = App\User::insert($data);
         if ($status == 1) {
             $response["error"] = FALSE;
-            $response["error_msg"] = "Successfully Registered";
+            $response["message"] = "Successfully Registered";
         } else {
             $response["error"] = TRUE;
-            $response["error_msg"] = "Unknown error occurred in registration. Please try again!";
+            $response["message"] = "Unknown error occurred in registration. Please try again!";
         }
         return $response;
     }
