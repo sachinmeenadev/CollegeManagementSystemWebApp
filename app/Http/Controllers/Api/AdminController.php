@@ -53,12 +53,11 @@ class AdminController extends Controller
 
     public function updateRole(Request $request, $id)
     {
-        $data[] = array(
+        $data = [
             'roleType' => $request->roleType,
             'roleUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
-        );
-        dd($data);
-        $status = App\Role::where('roleId', '=', $id)->insert($data);
+        ];
+        $status = App\Role::where('roleId', $id)->update($data);
         if ($status == 1) {
             $response["error"] = FALSE;
             $response["message"] = "Successfully Created";
