@@ -27,43 +27,85 @@ Route::middleware('api')->post('/register', [
 |--------------------------------------------------------------
 |Here we will have all the routes for Admin panel of Mobile Application
 */
-//Role Creation Routes
-Route::prefix('admin/roles')->group(function () {
-    Route::get('/', [
-        'as' => 'apiAdminGetRole',
-        'uses' => 'Api\AdminController@getRole'
-    ]);
-    Route::post('/', [
-        'as' => 'apiAdminInsertRole',
-        'uses' => 'Api\AdminController@insertRole'
-    ]);
-    Route::put('/{id}', [
-        'as' => 'apiAdminUpdateRole',
-        'uses' => 'Api\AdminController@updateRole'
-    ]);
-    Route::delete('/{id}', [
-        'as' => 'apiAdminDeleteRole',
-        'uses' => 'Api\AdminController@deleteRole'
-    ]);
+Route::prefix('admin')->group(function () {
+    //Role Creation Routes
+    Route::prefix('/roles')->group(function () {
+        Route::get('/', [
+            'as' => 'apiAdminGetRole',
+            'uses' => 'Api\AdminController@getRole'
+        ]);
+        Route::post('/', [
+            'as' => 'apiAdminInsertRole',
+            'uses' => 'Api\AdminController@insertRole'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiAdminUpdateRole',
+            'uses' => 'Api\AdminController@updateRole'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiAdminDeleteRole',
+            'uses' => 'Api\AdminController@deleteRole'
+        ]);
+    });
+    //=========================================================//
+    //User Creation Routes
+    Route::prefix('/users')->group(function () {
+        Route::get('/', [
+            'as' => 'apiAdminGetUser',
+            'uses' => 'Api\AdminController@getUser'
+        ]);
+        Route::post('/', [
+            'as' => 'apiAdminInsertUser',
+            'uses' => 'Api\AdminController@insertUser'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiAdminUpdateUser',
+            'uses' => 'Api\AdminController@updateUser'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiAdminDeleteUser',
+            'uses' => 'Api\AdminController@deleteUser'
+        ]);
+    });
+    //=========================================================//
+    //College Branch Creation Routes
+    Route::prefix('/branches')->group(function () {
+        Route::get('/', [
+            'as' => 'apiAdminGetBranch',
+            'uses' => 'Api\AdminController@getBranch'
+        ]);
+        Route::post('/', [
+            'as' => 'apiAdminInsertBranch',
+            'uses' => 'Api\AdminController@insertBranch'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiAdminUpdateBranch',
+            'uses' => 'Api\AdminController@updateBranch'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiAdminDeleteBranch',
+            'uses' => 'Api\AdminController@deleteBranch'
+        ]);
+    });
+    //=========================================================//
+    //Subject Creation Routes
+    Route::prefix('/subjects')->group(function () {
+        Route::get('/', [
+            'as' => 'apiAdminGetSubject',
+            'uses' => 'Api\AdminController@getSubject'
+        ]);
+        Route::post('/', [
+            'as' => 'apiAdminInsertSubject',
+            'uses' => 'Api\AdminController@insertSubject'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiAdminUpdateSubject',
+            'uses' => 'Api\AdminController@updateSubject'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiAdminDeleteSubject',
+            'uses' => 'Api\AdminController@deleteSubject'
+        ]);
+    });
+    //=========================================================//
 });
-//=========================================================//
-//User Creation Routes
-Route::prefix('admin/users')->group(function () {
-    Route::get('/', [
-        'as' => 'apiAdminGetUser',
-        'uses' => 'Api\AdminController@getUser'
-    ]);
-    Route::post('/', [
-        'as' => 'apiAdminInsertUser',
-        'uses' => 'Api\AdminController@insertUser'
-    ]);
-    Route::put('/{id}', [
-        'as' => 'apiAdminUpdateUser',
-        'uses' => 'Api\AdminController@updateUser'
-    ]);
-    Route::delete('/{id}', [
-        'as' => 'apiAdminDeleteUser',
-        'uses' => 'Api\AdminController@deleteUser'
-    ]);
-});
-//=========================================================//

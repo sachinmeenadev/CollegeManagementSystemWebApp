@@ -147,6 +147,7 @@ class AdminController extends Controller
          * 3. "2" For Role
          * 4. "3" For all update
          */
+        //die(print_r($request->request));
         if ($request->userUpdateStatus == 0) {
             $data = [
                 'userName' => $request->userName,
@@ -198,6 +199,142 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         $status = App\User::where('userId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
+        }
+        return $response;
+    }
+
+    /*
+     * Admin College Branch Panel functions
+     */
+    public function getBranch()
+    {
+        $response = array("error" => FALSE);
+        $branches = App\College_branch::get();
+        if (count($branches) > 0) {
+            $response["error"] = FALSE;
+            $response["branches"] = $branches;
+        } else {
+            $response["message"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function insertBranch(Request $request)
+    {
+        $data[] = array(
+            'collegeBranchName' => $request->collegeBranchName,
+            'collegeBranchAbbr' => $request->collegeBranchAbbr,
+            'collegeBranchCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'collegeBranchUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        $status = App\College_branch::insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateBranch(Request $request, $id)
+    {
+        $data = [
+            'collegeBranchName' => $request->collegeBranchName,
+            'collegeBranchAbbr' => $request->collegeBranchAbbr,
+            'collegeBranchUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        ];
+        $status = App\College_branch::where('collegeBranchId', $id)->update($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function deleteBranch($id)
+    {
+        $status = App\College_branch::where('collegeBranchId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
+        }
+        return $response;
+    }
+
+    /*
+     * Admin Subject Panel functions
+     */
+    public function getSubject()
+    {
+        $response = array("error" => FALSE);
+        $subjects = App\Subject::get();
+        if (count($subjects) > 0) {
+            $response["error"] = FALSE;
+            $response["subjects"] = $subjects;
+        } else {
+            $response["message"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function insertSubject(Request $request)
+    {
+        $data[] = array(
+            'subjectName' => $request->subjectName,
+            'subjectAbbr' => $request->subjectAbbr,
+            'subjectCode' => $request->subjectCode,
+            'subjectCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'subjectUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        $status = App\Subject::insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateSubject(Request $request, $id)
+    {
+        $data = [
+            'subjectName' => $request->subjectName,
+            'subjectAbbr' => $request->subjectAbbr,
+            'subjectCode' => $request->subjectCode,
+            'subjectUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        ];
+        $status = App\Subject::where('subjectId', $id)->update($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function deleteSubject($id)
+    {
+        $status = App\Subject::where('subjectId', '=', $id)->delete();
         if ($status == 1) {
             $response["error"] = FALSE;
             $response["message"] = "Successfully deleted";
