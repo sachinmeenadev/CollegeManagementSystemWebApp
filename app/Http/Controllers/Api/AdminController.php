@@ -80,4 +80,21 @@ class AdminController extends Controller
         }
         return $response;
     }
+
+    /*
+     * Admin User Panel functions
+     */
+    public function getUser()
+    {
+        $response = array("error" => FALSE);
+        $users = App\Role::join('users', 'userRoleId', 'roleId')->get();
+        if (count($users) > 0) {
+            $response["error"] = FALSE;
+            $response["users"] = $users;
+        } else {
+            $response["message"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
 }
