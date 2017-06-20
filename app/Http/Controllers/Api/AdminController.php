@@ -27,7 +27,7 @@ class AdminController extends Controller
             $response["error"] = FALSE;
             $response["roles"] = $roles;
         } else {
-            $response["message"] = FALSE;
+            $response["error"] = FALSE;
             $response["message"] = "No entry in database";
         }
         return $response;
@@ -92,7 +92,7 @@ class AdminController extends Controller
             $response["error"] = FALSE;
             $response["users"] = $users;
         } else {
-            $response["message"] = FALSE;
+            $response["error"] = FALSE;
             $response["message"] = "No entry in database";
         }
         return $response;
@@ -220,7 +220,7 @@ class AdminController extends Controller
             $response["error"] = FALSE;
             $response["branches"] = $branches;
         } else {
-            $response["message"] = FALSE;
+            $response["error"] = FALSE;
             $response["message"] = "No entry in database";
         }
         return $response;
@@ -287,7 +287,7 @@ class AdminController extends Controller
             $response["error"] = FALSE;
             $response["subjects"] = $subjects;
         } else {
-            $response["message"] = FALSE;
+            $response["error"] = FALSE;
             $response["message"] = "No entry in database";
         }
         return $response;
