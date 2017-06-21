@@ -108,4 +108,24 @@ Route::prefix('admin')->group(function () {
         ]);
     });
     //=========================================================//
+    //Faculty Member Creation Routes
+    Route::prefix('/facultyMembers')->group(function () {
+        Route::get('/', [
+            'as' => 'apiAdminGetFacultyMember',
+            'uses' => 'Api\AdminController@getFacultyMember'
+        ]);
+        Route::post('/', [
+            'as' => 'apiAdminInsertFacultyMember',
+            'uses' => 'Api\AdminController@insertFacultyMember'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiAdminUpdateFacultyMember',
+            'uses' => 'Api\AdminController@updateFacultyMember'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiAdminDeleteFacultyMember',
+            'uses' => 'Api\AdminController@deleteFacultyMember'
+        ]);
+    });
+    //=========================================================//
 });

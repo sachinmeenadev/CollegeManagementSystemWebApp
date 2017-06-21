@@ -147,7 +147,6 @@ class AdminController extends Controller
          * 3. "2" For Role
          * 4. "3" For all update
          */
-        //die(print_r($request->request));
         if ($request->userUpdateStatus == 0) {
             $data = [
                 'userName' => $request->userName,
@@ -335,6 +334,95 @@ class AdminController extends Controller
     public function deleteSubject($id)
     {
         $status = App\Subject::where('subjectId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
+        }
+        return $response;
+    }
+
+    /*
+     * Admin Faculty Member Panel functions
+     */
+    public function getFacultyMember()
+    {
+        $response = array("error" => FALSE);
+        $facultyMember = App\Faculty_member::join('college_branches', 'facultyMemberBranchId', 'collegeBranchId')->get();
+        if (count($facultyMember) > 0) {
+            $response["error"] = FALSE;
+            $response["facultyMembers"] = $facultyMember;
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function insertFacultyMember(Request $request)
+    {
+        $data[] = array(
+            'facultyMemberName' => $request->facultyMemberName,
+            'facultyMemberBranchId' => $request->facultyMemberBranchId,
+            'facultyMemberDesignation' => $request->facultyMemberDesignation,
+            'facultyMemberContact' => $request->facultyMemberContact,
+            'facultyMemberEmail' => $request->facultyMemberEmail,
+            'facultyMemberCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'facultyMemberUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        $status = App\Faculty_member::insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateFacultyMember(Request $request, $id)
+    {
+        /**
+         * 1. "0" Without Branch
+         * 2. "1" With Branch
+         */
+
+        if ($request->facultyMemberUpdateStatus == 0) {
+            $data = [
+                'facultyMemberName' => $request->facultyMemberName,
+                'facultyMemberDesignation' => $request->facultyMemberDesignation,
+                'facultyMemberContact' => $request->facultyMemberContact,
+                'facultyMemberEmail' => $request->facultyMemberEmail,
+                'facultyMemberUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->facultyMemberUpdateStatus == 1) {
+            $data = [
+                'facultyMemberName' => $request->facultyMemberName,
+                'facultyMemberBranchId' => $request->facultyMemberBranchId,
+                'facultyMemberDesignation' => $request->facultyMemberDesignation,
+                'facultyMemberContact' => $request->facultyMemberContact,
+                'facultyMemberEmail' => $request->facultyMemberEmail,
+                'facultyMemberUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        }
+        $status = App\Faculty_member::where('facultyMemberId', $id)->update($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public
+    function deleteFacultyMember($id)
+    {
+        $status = App\Faculty_member::where('facultyMemberId', '=', $id)->delete();
         if ($status == 1) {
             $response["error"] = FALSE;
             $response["message"] = "Successfully deleted";
