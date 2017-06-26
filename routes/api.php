@@ -125,3 +125,20 @@ Route::prefix('admin')->group(function () {
     });
     //=========================================================//
 });
+//==========================================================//
+/*
+|--------------------------------------------------------------
+| For all HOD routes
+|--------------------------------------------------------------
+|Here we will have all the routes for HOD panel of Mobile Application
+*/
+Route::prefix('hod')->group(function () {
+    //=========================================================//
+    //Faculty Member Creation Routes
+    Route::prefix('/facultyMembers')->group(function () {
+        Route::post('/', [
+            'as' => 'apiHodGetFacultyMember',
+            'uses' => 'Api\HodController@getFacultyMember'
+        ]);
+    });
+});

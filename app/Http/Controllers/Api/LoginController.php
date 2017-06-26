@@ -20,7 +20,8 @@ class LoginController extends Controller
         $response = array("error" => FALSE);
 
         $loginData = App\User::join('roles', 'roleId', '=', 'userRoleId')
-            ->select('*')
+            ->leftJoin('faculty_members', 'facultyMemberEmail', '=', 'userEmail')
+            ->select('users.*', 'roles.*', 'faculty_members.facultyMemberCurrentBranchId')
             ->where('userEmail', '=', $request->userEmail)
             ->get();
 
@@ -31,6 +32,7 @@ class LoginController extends Controller
                 $response["user"]["userName"] = $data->userName;
                 $response["user"]["userEmail"] = $data->userEmail;
                 $response["user"]["userRole"] = $data->roleType;
+                $response["user"]["facultyMemberCurrentBranchId"] = $data->facultyMemberCurrentBranchId;
             }
         } else {
             $response["error"] = TRUE;

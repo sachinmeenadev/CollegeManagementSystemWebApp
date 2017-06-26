@@ -306,7 +306,8 @@ class AdminController extends Controller
     public function getFacultyMember()
     {
         $response = array("error" => FALSE);
-        $facultyMember = App\Faculty_member::join('college_branches', 'facultyMemberBranchId', 'collegeBranchId')->get();
+        $facultyMember = App\Faculty_member::join('college_branches as parent_branch', 'facultyMemberBranchId', 'parent_branch.collegeBranchId')
+            ->leftJoin('college_branches as  current_branch', 'facultyMemberCurrentBranchId', 'current_branch.collegeBranchId')->select('faculty_members.*', 'parent_branch.*', 'current_branch.collegeBranchName as currentBranchName', 'current_branch.collegeBranchAbbr as currentBranchAbbr')->get();
         if (count($facultyMember) > 0) {
             $response["error"] = FALSE;
             $response["facultyMembers"] = $facultyMember;
@@ -322,6 +323,7 @@ class AdminController extends Controller
         $data[] = array(
             'facultyMemberName' => $request->facultyMemberName,
             'facultyMemberBranchId' => $request->facultyMemberBranchId,
+            'facultyMemberCurrentBranchId' => $request->facultyMemberCurrentBranchId,
             'facultyMemberDesignation' => $request->facultyMemberDesignation,
             'facultyMemberContact' => $request->facultyMemberContact,
             'facultyMemberEmail' => $request->facultyMemberEmail,
@@ -343,7 +345,9 @@ class AdminController extends Controller
     {
         /**
          * 1. "0" Without Branch
-         * 2. "1" With Branch
+         * 2. "1" With Parent Branch
+         * 3. "1" With Current Branch
+         * 4. "1" With Both Branch
          */
 
         if ($request->facultyMemberUpdateStatus == 0) {
@@ -358,6 +362,25 @@ class AdminController extends Controller
             $data = [
                 'facultyMemberName' => $request->facultyMemberName,
                 'facultyMemberBranchId' => $request->facultyMemberBranchId,
+                'facultyMemberDesignation' => $request->facultyMemberDesignation,
+                'facultyMemberContact' => $request->facultyMemberContact,
+                'facultyMemberEmail' => $request->facultyMemberEmail,
+                'facultyMemberUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->facultyMemberUpdateStatus == 2) {
+            $data = [
+                'facultyMemberName' => $request->facultyMemberName,
+                'facultyMemberCurrentBranchId' => $request->facultyMemberCurrentBranchId,
+                'facultyMemberDesignation' => $request->facultyMemberDesignation,
+                'facultyMemberContact' => $request->facultyMemberContact,
+                'facultyMemberEmail' => $request->facultyMemberEmail,
+                'facultyMemberUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->facultyMemberUpdateStatus == 3) {
+            $data = [
+                'facultyMemberName' => $request->facultyMemberName,
+                'facultyMemberBranchId' => $request->facultyMemberBranchId,
+                'facultyMemberCurrentBranchId' => $request->facultyMemberCurrentBranchId,
                 'facultyMemberDesignation' => $request->facultyMemberDesignation,
                 'facultyMemberContact' => $request->facultyMemberContact,
                 'facultyMemberEmail' => $request->facultyMemberEmail,
