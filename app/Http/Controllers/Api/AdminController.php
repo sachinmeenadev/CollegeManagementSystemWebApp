@@ -101,15 +101,10 @@ class AdminController extends Controller
     public function insertUser(Request $request)
     {
         $userUniqueId = uniqid('', true);
-        $hash = $this->hashSSHA($request->userPassword);
-        $userPassword = $hash["encrypted"]; // encrypted password
-        $userSalt = $hash["salt"]; // salt
         $data[] = array(
             'userUniqueId' => $userUniqueId,
             'userName' => $request->userName,
             'userEmail' => $request->userEmail,
-            'userPassword' => $userPassword,
-            'userSalt' => $userSalt,
             'userRoleId' => $request->userRoleId,
             'userCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
             'userUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -125,27 +120,11 @@ class AdminController extends Controller
         return $response;
     }
 
-    /**
-     * Encrypting password
-     * @param password
-     * @returns salt and encrypted password
-     */
-    public function hashSSHA($password)
-    {
-        $salt = sha1(rand());
-        $salt = substr($salt, 0, 10);
-        $encrypted = base64_encode(sha1($password . $salt, true) . $salt);
-        $hash = array("salt" => $salt, "encrypted" => $encrypted);
-        return $hash;
-    }
-
     public function updateUser(Request $request, $id)
     {
         /**
          * 1. "0" For User Name & Email
-         * 2. "1" For Password
-         * 3. "2" For Role
-         * 4. "3" For all update
+         * 2. "1" For Role
          */
         if ($request->userUpdateStatus == 0) {
             $data = [
@@ -154,32 +133,9 @@ class AdminController extends Controller
                 'userUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
             ];
         } else if ($request->userUpdateStatus == 1) {
-            $hash = $this->hashSSHA($request->userPassword);
-            $userPassword = $hash["encrypted"]; // encrypted password
-            $userSalt = $hash["salt"]; // salt
             $data = [
                 'userName' => $request->userName,
                 'userEmail' => $request->userEmail,
-                'userPassword' => $userPassword,
-                'userSalt' => $userSalt,
-                'userUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
-            ];
-        } else if ($request->userUpdateStatus == 2) {
-            $data = [
-                'userName' => $request->userName,
-                'userEmail' => $request->userEmail,
-                'userRoleId' => $request->userRoleId,
-                'userUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
-            ];
-        } else if ($request->userUpdateStatus == 3) {
-            $hash = $this->hashSSHA($request->userPassword);
-            $userPassword = $hash["encrypted"]; // encrypted password
-            $userSalt = $hash["salt"]; // salt
-            $data = [
-                'userName' => $request->userName,
-                'userEmail' => $request->userEmail,
-                'userPassword' => $userPassword,
-                'userSalt' => $userSalt,
                 'userRoleId' => $request->userRoleId,
                 'userUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
             ];

@@ -16,10 +16,6 @@ Route::middleware('api')->post('/login', [
     'uses' => 'Api\LoginController@login'
 ]);
 
-Route::middleware('api')->post('/register', [
-    'as' => 'appRegister',
-    'uses' => 'Api\LoginController@register'
-]);
 //==========================================================//
 /*
 |--------------------------------------------------------------
