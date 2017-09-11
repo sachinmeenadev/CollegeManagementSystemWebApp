@@ -133,12 +133,32 @@ Route::prefix('admin')->group(function () {
 |Here we will have all the routes for HOD panel of Mobile Application
 */
 Route::prefix('hod')->group(function () {
-    //=========================================================//
-    //Faculty Member Creation Routes
+    //Faculty Member List Routes
     Route::prefix('/facultyMembers')->group(function () {
         Route::post('/', [
             'as' => 'apiHodGetFacultyMember',
             'uses' => 'Api\HodController@getFacultyMember'
         ]);
     });
+    //=========================================================//
+    //Tutor Creation Routes
+    Route::prefix('/tutors')->group(function () {
+        Route::post('/', [
+            'as' => 'apiHodGetTutor',
+            'uses' => 'Api\HodController@getTutor'
+        ]);
+        Route::post('/insert', [
+            'as' => 'apiHodInsertTutor',
+            'uses' => 'Api\HodController@insertTutor'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiHodUpdateTutor',
+            'uses' => 'Api\HodController@updateTutor'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiHodDeleteTutor',
+            'uses' => 'Api\HodController@deleteTutor'
+        ]);
+    });
+    //=========================================================//
 });

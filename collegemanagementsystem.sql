@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2017 at 02:43 PM
+-- Generation Time: Jul 06, 2017 at 06:17 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -31,8 +31,17 @@ CREATE TABLE `college_branches` (
   `collegeBranchName` varchar(60) NOT NULL,
   `collegeBranchAbbr` varchar(60) NOT NULL,
   `collegeBranchCreatedAt` timestamp NULL DEFAULT NULL,
-  `collegeBranchUpatedAt` timestamp NULL
+  `collegeBranchUpdatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `college_branches`
+--
+
+INSERT INTO `college_branches` (`collegeBranchId`, `collegeBranchName`, `collegeBranchAbbr`, `collegeBranchCreatedAt`, `collegeBranchUpdatedAt`) VALUES
+(1, 'Civil Engineering', 'CE', '2017-06-20 12:43:11', '2017-06-20 12:43:11'),
+(2, 'Computer Engineering', 'CS', '2017-06-20 12:43:20', '2017-06-20 12:43:20'),
+(3, 'Electronic and Communication Engineering', 'ECE', '2017-06-26 02:17:46', '2017-06-26 02:17:46');
 
 -- --------------------------------------------------------
 
@@ -44,12 +53,25 @@ CREATE TABLE `faculty_members` (
   `facultyMemberId` int(11) NOT NULL,
   `facultyMemberName` varchar(50) NOT NULL,
   `facultyMemberBranchId` int(11) NOT NULL,
+  `facultyMemberCurrentBranchId` int(11) DEFAULT NULL,
   `facultyMemberDesignation` varchar(50) NOT NULL,
   `facultyMemberContact` varchar(15) NOT NULL,
   `facultyMemberEmail` varchar(60) NOT NULL,
   `facultyMemberCreatedAt` timestamp NULL DEFAULT NULL,
   `facultyMemberUpdatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `faculty_members`
+--
+
+INSERT INTO `faculty_members` (`facultyMemberId`, `facultyMemberName`, `facultyMemberBranchId`, `facultyMemberCurrentBranchId`, `facultyMemberDesignation`, `facultyMemberContact`, `facultyMemberEmail`, `facultyMemberCreatedAt`, `facultyMemberUpdatedAt`) VALUES
+(1, 'Paras Bassi', 2, 2, 'Project Manager', '12345678', 'paras.bassi@poornima.org', '2017-06-21 11:40:30', '2017-06-26 02:16:49'),
+(2, 'civ fac 1', 1, 1, 'assistant professor', '123456', 'civfac1@poornima.org', '2017-06-25 19:58:47', '2017-06-26 02:16:13'),
+(3, 'cs fac 2', 2, 2, 'assistant professor', '123456', 'csfac2@poornima.org', '2017-06-25 19:59:15', '2017-06-26 02:17:25'),
+(4, 'csfac3', 2, 2, 'assistant professor', '1234567', 'csfac3@poornima.org', '2017-06-25 19:59:41', '2017-06-26 02:17:09'),
+(5, 'Swapnil Jain', 3, 2, 'Assistant Professor', '123456486', 'swapnil@poornima.org', '2017-06-26 02:18:26', '2017-06-26 02:18:26'),
+(6, 'HOD', 2, 2, 'Assistant Professor', '12345678', '2014pietcssachin@poornima.org', '2017-06-26 02:18:26', '2017-06-26 02:18:26');
 
 -- --------------------------------------------------------
 
@@ -61,8 +83,11 @@ CREATE TABLE `faculty_member_subjects` (
   `fmsId` int(11) NOT NULL,
   `fmsFacultyId` int(11) NOT NULL,
   `fmsSubjectId` int(11) NOT NULL,
-  `fmsCreatedAt` timestamp NULL DEFAULT NULL,
-  `fmsUpdatedAt` timestamp NULL DEFAULT NULL
+  `fmsClass` varchar(5) DEFAULT NULL,
+  `fmsSection` varchar(5) DEFAULT NULL,
+  `fmsBatch` varchar(5) DEFAULT NULL,
+  `fmsCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fmsUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -87,7 +112,8 @@ INSERT INTO `roles` (`roleId`, `roleType`, `roleCreatedAt`, `roleUpdatedAt`) VAL
 (2, 'HOD', '2017-06-16 04:44:47', '2017-06-16 05:31:13'),
 (3, 'Tutor', '2017-06-16 04:44:47', '2017-06-16 05:31:13'),
 (4, 'Faculty', '2017-06-16 04:44:47', '2017-06-16 05:31:13'),
-(5, 'Placement', '2017-06-16 04:44:47', '2017-06-16 05:31:13');
+(5, 'Placement', '2017-06-16 04:44:47', '2017-06-16 05:31:13'),
+(8, 'Jerry Parul', '2017-06-18 21:57:02', '2017-06-20 12:48:51');
 
 -- --------------------------------------------------------
 
@@ -169,6 +195,14 @@ CREATE TABLE `subjects` (
   `subjectUpdatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`subjectId`, `subjectName`, `subjectAbbr`, `subjectCode`, `subjectCreatedAt`, `subjectUpdatedAt`) VALUES
+(1, 'Linux And Shell Programming', 'LSP', '3CS3', '2017-06-20 13:23:47', '2017-06-20 13:23:47'),
+(2, 'oops', 'oop', '3cs6', '2017-06-25 20:00:34', '2017-06-25 20:00:41');
+
 -- --------------------------------------------------------
 
 --
@@ -196,8 +230,6 @@ CREATE TABLE `users` (
   `userUniqueId` varchar(23) DEFAULT NULL,
   `userName` varchar(50) NOT NULL,
   `userEmail` varchar(100) NOT NULL,
-  `userPassword` varchar(160) NOT NULL,
-  `userSalt` varchar(10) DEFAULT NULL,
   `userRoleId` int(11) DEFAULT NULL,
   `userCreatedAt` timestamp NULL DEFAULT NULL,
   `userUpdatedAt` timestamp NULL DEFAULT NULL
@@ -207,8 +239,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `userUniqueId`, `userName`, `userEmail`, `userPassword`, `userSalt`, `userRoleId`, `userCreatedAt`, `userUpdatedAt`) VALUES
-(1, '5943c1e3e99d61.47959611', 'Admin', 'admin@admin.com', '6FLyty0+cte8nt8/tAwsO/eRUZI0NzM0N2YzMDhi', '47347f308b', 1, '2017-06-16 06:02:51', NULL);
+INSERT INTO `users` (`userId`, `userUniqueId`, `userName`, `userEmail`, `userRoleId`, `userCreatedAt`, `userUpdatedAt`) VALUES
+(1, '5943c1e3e99d61.47959611', 'Admin', 'sachinmeena.dev@gmail.com', 1, '2017-06-16 06:02:51', '2017-06-25 21:36:06'),
+(2, '59475ed5e441d6.17918151', 'HOD', '2014pietcssachin@poornima.org', 2, '2017-06-18 23:49:17', '2017-06-25 19:58:08');
 
 --
 -- Indexes for dumped tables
@@ -279,12 +312,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `college_branches`
 --
 ALTER TABLE `college_branches`
-  MODIFY `collegeBranchId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `collegeBranchId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `faculty_members`
 --
 ALTER TABLE `faculty_members`
-  MODIFY `facultyMemberId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `facultyMemberId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `faculty_member_subjects`
 --
@@ -294,7 +327,7 @@ ALTER TABLE `faculty_member_subjects`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `roleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `students`
 --
@@ -309,7 +342,7 @@ ALTER TABLE `student_academics`
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subjectId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subjectId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tutors`
 --
@@ -319,7 +352,7 @@ ALTER TABLE `tutors`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
