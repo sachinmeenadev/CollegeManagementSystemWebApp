@@ -161,4 +161,16 @@ Route::prefix('hod')->group(function () {
         ]);
     });
     //=========================================================//
+    //Student Routes
+    Route::prefix('/students')->group(function () {
+        Route::post('/', [
+            'as' => 'apiHodGetStudentSearch',
+            'uses' => 'Api\HodController@getStudentSearch'
+        ]);
+        Route::get('/{id}', [
+            'as' => 'apiHodStudentProfile',
+            'uses' => 'Api\HodController@getStudentProfile'
+        ]);
+    });
+    //=========================================================//
 });

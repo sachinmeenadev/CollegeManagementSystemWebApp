@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,114 @@ class HodController extends Controller
         if (count($tutor) > 0) {
             $response["error"] = FALSE;
             $response["tutors"] = $tutor;
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function insertTutor(Request $request)
+    {
+        $data[] = array(
+            'tutorFacultyId' => $request->tutorFacultyId,
+            'tutorClass' => $request->tutorClass,
+            'tutorSection' => $request->tutorSection,
+            'tutorBatch' => $request->tutorBatch,
+            'tutorCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'tutorUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        $status = App\Tutor::insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateTutor(Request $request, $id)
+    {
+        /**
+         * 1. "0" For others
+         * 2. "1" For Changing faculty also
+         */
+        if ($request->tutorNameUpdateStatus == 0) {
+            $data = [
+                'tutorClass' => $request->tutorClass,
+                'tutorSection' => $request->tutorSection,
+                'tutorBatch' => $request->tutorBatch,
+                'tutorUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->tutorNameUpdateStatus == 1) {
+            $data = [
+                'tutorFacultyId' => $request->tutorFacultyId,
+                'tutorClass' => $request->tutorClass,
+                'tutorSection' => $request->tutorSection,
+                'tutorBatch' => $request->tutorBatch,
+                'tutorUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        }
+        $status = App\Tutor::where('tutorId', $id)->update($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function deleteTutor($id)
+    {
+        $status = App\Tutor::where('tutorId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
+        }
+        return $response;
+    }
+
+    /*
+     * HOD student Panel functions
+     */
+
+    public function getStudentSearch(Request $request)
+    {
+        $response = array("error" => FALSE);
+        $studentName = App\Studet::where('studentName', $request->studentInfo)
+            ->get();
+        $studentRegNumber = App\Studet::where('studentRegNumber', $request->studentInfo)
+            ->get();
+        if (count($studentName) > 0) {
+            $response["error"] = FALSE;
+            $response["students"] = $studentName;
+        } else if (count($studentName) <= 0 && count($studentRegNumber) > 0) {
+            $response["error"] = FALSE;
+            $response["students"] = $studentRegNumber;
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function getStudentProfile($id)
+    {
+        $response = array("error" => FALSE);
+        $student = App\Student::leftJoin('student_college_academics', 'studentCollegeAcademicStudentId', 'studentId')
+            ->leftJoin('student_academics', 'studentAcademicStudentId', 'studentId')
+            ->where('studentId', $id)
+            ->get();
+        if (count($student) > 0) {
+            $response["error"] = FALSE;
+            $response["student"] = $student;
         } else {
             $response["error"] = FALSE;
             $response["message"] = "No entry in database";
