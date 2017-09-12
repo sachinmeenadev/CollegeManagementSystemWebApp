@@ -130,16 +130,12 @@ class HodController extends Controller
     public function getStudentSearch(Request $request)
     {
         $response = array("error" => FALSE);
-        $studentName = App\Studet::where('studentName', $request->studentInfo)
-            ->get();
-        $studentRegNumber = App\Studet::where('studentRegNumber', $request->studentInfo)
+        $studentName = App\Student::where('studentName', 'like', '%' . $request->studentInfo . '%')
+            ->orWhere('studentRegNumber', 'like', '%' . $request->studentInfo . '%')
             ->get();
         if (count($studentName) > 0) {
             $response["error"] = FALSE;
             $response["students"] = $studentName;
-        } else if (count($studentName) <= 0 && count($studentRegNumber) > 0) {
-            $response["error"] = FALSE;
-            $response["students"] = $studentRegNumber;
         } else {
             $response["error"] = FALSE;
             $response["message"] = "No entry in database";
