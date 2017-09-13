@@ -191,6 +191,14 @@ Route::prefix('hod')->group(function () {
             'as' => 'apiHodStudentProfile',
             'uses' => 'Api\HodController@getStudentProfile'
         ]);
+        Route::get('/list/{id}', [
+            'as' => 'apiGetHodStudentList',
+            'uses' => 'Api\HodController@getStudentList'
+        ]);
+        Route::post('/list', [
+            'as' => 'apiSetHodStudentList',
+            'uses' => 'Api\HodController@setStudentList'
+        ]);
     });
     //=========================================================//
 });

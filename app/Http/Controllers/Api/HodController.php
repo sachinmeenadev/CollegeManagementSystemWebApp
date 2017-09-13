@@ -232,6 +232,40 @@ class HodController extends Controller
      * HOD student Panel functions
      */
 
+    public function getStudentList($id)
+    {
+        $response = array("error" => FALSE);
+        $branches = App\Student::distinct()
+            ->where('studentBranchId', $id)
+            ->get();
+        if (count($branches) > 0) {
+            $response["error"] = FALSE;
+            $response["students"] = $branches;
+            //because of using same method again we are passing students as key instead of branches
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function setStudentList(Request $request)
+    {
+        $response = array("error" => FALSE);
+        $studentName = App\Student::where('studentSem', $request->studentSem)
+            ->where('studentSemSection', $request->studentSemSection)
+            ->where('studentSemBatch', $request->studentSemBatch)
+            ->get();
+        if (count($studentName) > 0) {
+            $response["error"] = FALSE;
+            $response["students"] = $studentName;
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
     public function getStudentSearch(Request $request)
     {
         $response = array("error" => FALSE);
