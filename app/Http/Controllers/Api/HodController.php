@@ -43,7 +43,7 @@ class HodController extends Controller
     public function getFacultyMembersAllotClassSubjects(Request $request)
     {
         $response = array("error" => FALSE);
-        $facultyMembersClassSubjects = App\Faculty_member_subject::join('faculty_members', 'facultyId', 'fmsFacultyId')
+        $facultyMembersClassSubjects = App\Faculty_member_subject::join('faculty_members', 'facultyMemberId', 'fmsFacultyId')
             ->join('subjects', 'subjectId', 'fmsSubjectId')
             ->where('facultyMemberCurrentBranchId', $request->branchId)
             ->get();
@@ -53,6 +53,91 @@ class HodController extends Controller
         } else {
             $response["error"] = FALSE;
             $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    public function insertFacultyMembersAllotClassSubjects(Request $request)
+    {
+        $data[] = array(
+            'fmsFacultyId' => $request->fmsFacultyId,
+            'fmsSubjectId' => $request->fmsSubjectId,
+            'fmsClass' => $request->fmsClass,
+            'fmsSection' => $request->fmsSection,
+            'fmsBatch' => $request->fmsBatch,
+            'fmsCreatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            'fmsUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+        );
+        $status = App\Faculty_member_subject::insert($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function updateFacultyMembersAllotClassSubjects(Request $request, $id)
+    {
+        /**
+         * 1. "0" For others
+         * 2. "1" For Changing faculty also
+         */
+        if ($request->fmsFacultyId != 0 && $request->fmsSubjectId == 0) {
+            $data = [
+                'fmsFacultyId' => $request->fmsFacultyId,
+                'fmsClass' => $request->fmsClass,
+                'fmsSection' => $request->fmsSection,
+                'fmsBatch' => $request->fmsBatch,
+                'fmsUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->fmsSubjectId != 0 && $request->fmsFacultyId == 0) {
+            $data = [
+                'fmsSubjectId' => $request->fmsSubjectId,
+                'fmsClass' => $request->fmsClass,
+                'fmsSection' => $request->fmsSection,
+                'fmsBatch' => $request->fmsBatch,
+                'fmsUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else if ($request->fmsSubjectId != 0 && $request->fmsFacultyId != 0) {
+            $data = [
+                'fmsFacultyId' => $request->fmsFacultyId,
+                'fmsSubjectId' => $request->fmsSubjectId,
+                'fmsClass' => $request->fmsClass,
+                'fmsSection' => $request->fmsSection,
+                'fmsBatch' => $request->fmsBatch,
+                'fmsUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        } else {
+            $data = [
+                'fmsClass' => $request->fmsClass,
+                'fmsSection' => $request->fmsSection,
+                'fmsBatch' => $request->fmsBatch,
+                'fmsUpdatedAt' => Carbon::now()->format('Y-m-d H:i:s'),
+            ];
+        }
+        $status = App\Faculty_member_subject::where('fmsId', $id)->update($data);
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully Created";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in creation. Please try again!";
+        }
+        return $response;
+    }
+
+    public function deleteFacultyMembersAllotClassSubjects($id)
+    {
+        $status = App\Faculty_member_subject::where('fmsId', '=', $id)->delete();
+        if ($status == 1) {
+            $response["error"] = FALSE;
+            $response["message"] = "Successfully deleted";
+        } else {
+            $response["error"] = TRUE;
+            $response["message"] = "Unknown error occurred in deleting. Please try again!";
         }
         return $response;
     }
