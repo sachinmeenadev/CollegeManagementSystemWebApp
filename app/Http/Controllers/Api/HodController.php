@@ -38,6 +38,26 @@ class HodController extends Controller
     }
 
     /*
+     * HOD Faculty Member Class and Subject Allotment Panel functions
+     */
+    public function getFacultyMembersAllotClassSubjects(Request $request)
+    {
+        $response = array("error" => FALSE);
+        $facultyMembersClassSubjects = App\Faculty_member_subject::join('faculty_members', 'facultyId', 'fmsFacultyId')
+            ->join('subjects', 'subjectId', 'fmsSubjectId')
+            ->where('facultyMemberCurrentBranchId', $request->branchId)
+            ->get();
+        if (count($facultyMembersClassSubjects) > 0) {
+            $response["error"] = FALSE;
+            $response["facultyMembersClassSubjects"] = $facultyMembersClassSubjects;
+        } else {
+            $response["error"] = FALSE;
+            $response["message"] = "No entry in database";
+        }
+        return $response;
+    }
+
+    /*
      * HOD Tutor List Panel functions
      */
     public function getTutor(Request $request)
@@ -148,6 +168,7 @@ class HodController extends Controller
         $response = array("error" => FALSE);
         $student = App\Student::leftJoin('student_college_academics', 'studentCollegeAcademicStudentId', 'studentId')
             ->leftJoin('student_academics', 'studentAcademicStudentId', 'studentId')
+            ->join('college_branches', 'collegeBranchId', 'studentBranchId')
             ->where('studentId', $id)
             ->get();
         if (count($student) > 0) {

@@ -141,6 +141,26 @@ Route::prefix('hod')->group(function () {
         ]);
     });
     //=========================================================//
+    //Faculty Member Class and Subject Allotment Routes
+    Route::prefix('/facultyMembersAllotClassSubjects')->group(function () {
+        Route::post('/', [
+            'as' => 'apiHodGetFacultyMembersAllotClassSubjects',
+            'uses' => 'Api\HodController@getFacultyMembersAllotClassSubjects'
+        ]);
+        Route::post('/insert', [
+            'as' => 'apiHodInsertFacultyMembersAllotClassSubjects',
+            'uses' => 'Api\HodController@insertFacultyMembersAllotClassSubjects'
+        ]);
+        Route::put('/{id}', [
+            'as' => 'apiHodUpdateFacultyMembersAllotClassSubjects',
+            'uses' => 'Api\HodController@updateFacultyMembersAllotClassSubjects'
+        ]);
+        Route::delete('/{id}', [
+            'as' => 'apiHodDeleteFacultyMembersAllotClassSubjects',
+            'uses' => 'Api\HodController@deleteFacultyMembersAllotClassSubjects'
+        ]);
+    });
+    //=========================================================//
     //Tutor Creation Routes
     Route::prefix('/tutors')->group(function () {
         Route::post('/', [
