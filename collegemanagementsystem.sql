@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2017 at 06:17 AM
+-- Generation Time: Sep 18, 2017 at 12:05 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -80,15 +80,23 @@ INSERT INTO `faculty_members` (`facultyMemberId`, `facultyMemberName`, `facultyM
 --
 
 CREATE TABLE `faculty_member_subjects` (
-  `fmsId` int(11) NOT NULL,
-  `fmsFacultyId` int(11) NOT NULL,
-  `fmsSubjectId` int(11) NOT NULL,
-  `fmsClass` varchar(5) DEFAULT NULL,
-  `fmsSection` varchar(5) DEFAULT NULL,
-  `fmsBatch` varchar(5) DEFAULT NULL,
-  `fmsCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fmsId`        int(11)   NOT NULL,
+  `fmsFacultyId` INT(11)            DEFAULT NULL,
+  `fmsSubjectId` INT(11)            DEFAULT NULL,
+  `fmsClass`     varchar(5)         DEFAULT NULL,
+  `fmsSection`   varchar(5)         DEFAULT NULL,
+  `fmsBatch`     varchar(5)         DEFAULT NULL,
+  `fmsCreatedAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `fmsUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `faculty_member_subjects`
+--
+
+INSERT INTO `faculty_member_subjects` (`fmsId`, `fmsFacultyId`, `fmsSubjectId`, `fmsClass`, `fmsSection`, `fmsBatch`, `fmsCreatedAt`, `fmsUpdatedAt`)
+VALUES
+  (1, 3, 2, '3 Sem', '3CS-A', 'A1', '2017-09-13 14:36:15', '2017-09-13 09:06:15');
 
 -- --------------------------------------------------------
 
@@ -122,34 +130,56 @@ INSERT INTO `roles` (`roleId`, `roleType`, `roleCreatedAt`, `roleUpdatedAt`) VAL
 --
 
 CREATE TABLE `students` (
-  `studentId` int(11) NOT NULL,
-  `studentName` varchar(50) DEFAULT NULL,
-  `studentRegNumber` varchar(20) DEFAULT NULL,
-  `studentBranchId` int(11) DEFAULT NULL,
-  `studentSem` int(11) DEFAULT NULL,
-  `studentSemSection` char(1) DEFAULT NULL,
-  `studentSemBatch` varchar(5) DEFAULT NULL,
-  `studentEmail` varchar(50) DEFAULT NULL,
-  `studentContact` varchar(15) DEFAULT NULL,
-  `studentFatherName` varchar(50) DEFAULT NULL,
-  `studentFatherContact` varchar(15) DEFAULT NULL,
-  `studentFatherEmail` varchar(50) DEFAULT NULL,
-  `studentFatherOccupation` varchar(50) DEFAULT NULL,
-  `studentFatherIncome` double DEFAULT NULL,
-  `studentMotherName` varchar(50) DEFAULT NULL,
-  `studentMotherContact` varchar(15) DEFAULT NULL,
-  `studentMotherEmail` varchar(50) DEFAULT NULL,
-  `studentMotherOccupation` varchar(50) DEFAULT NULL,
-  `studentMotherIncome` double DEFAULT NULL,
-  `studentLocalGuardianName` varchar(50) DEFAULT NULL,
-  `studentLocalGuardianContact` varchar(15) DEFAULT NULL,
-  `studentLocalGuardianEmail` varchar(50) DEFAULT NULL,
-  `studentResidentType` varchar(10) DEFAULT NULL,
-  `studentLocalAddress` varchar(200) DEFAULT NULL,
-  `studentPermanentAddress` varchar(200) DEFAULT NULL,
-  `studentCreatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `studentUpdatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `studentId`                    int(11)      NOT NULL,
+  `studentName`                  varchar(50)           DEFAULT NULL,
+  `studentRegNumber`             varchar(20)           DEFAULT NULL,
+  `studentBranchId`              int(11)               DEFAULT NULL,
+  `studentSem`                   VARCHAR(8)            DEFAULT NULL,
+  `studentSemSection`            VARCHAR(8)            DEFAULT NULL,
+  `studentSemBatch`              varchar(5)            DEFAULT NULL,
+  `studentEmail`                 varchar(50)           DEFAULT NULL,
+  `studentContact`               varchar(15)           DEFAULT NULL,
+  `studentProfilePicture`        VARCHAR(500) NOT NULL DEFAULT '/img/user.png',
+  `studentFatherName`            varchar(50)           DEFAULT NULL,
+  `studentFatherContact`         varchar(15)           DEFAULT NULL,
+  `studentFatherEmail`           varchar(50)           DEFAULT NULL,
+  `studentFatherOccupation`      varchar(50)           DEFAULT NULL,
+  `studentFatherIncome`          double                DEFAULT NULL,
+  `studentMotherName`            varchar(50)           DEFAULT NULL,
+  `studentMotherContact`         varchar(15)           DEFAULT NULL,
+  `studentMotherEmail`           varchar(50)           DEFAULT NULL,
+  `studentMotherOccupation`      varchar(50)           DEFAULT NULL,
+  `studentMotherIncome`          double                DEFAULT NULL,
+  `studentLocalGuardianName`     varchar(50)           DEFAULT NULL,
+  `studentLocalGuardianContact`  varchar(15)           DEFAULT NULL,
+  `studentLocalGuardianEmail`    varchar(50)           DEFAULT NULL,
+  `studentLocalGuardianRelation` VARCHAR(20)           DEFAULT NULL,
+  `studentResidentType`          varchar(10)           DEFAULT NULL,
+  `studentLocalAddress`          varchar(200)          DEFAULT NULL,
+  `studentPermanentAddress`      varchar(200)          DEFAULT NULL,
+  `studentState`                 VARCHAR(50)           DEFAULT NULL,
+  `studentCity`                  VARCHAR(30)           DEFAULT NULL,
+  `studentPincode`               INT(11),
+  `studentHobbies`               TEXT,
+  `studentCreatedAt`             TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `studentUpdatedAt`             timestamp    NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`studentId`, `studentName`, `studentRegNumber`, `studentBranchId`, `studentSem`, `studentSemSection`, `studentSemBatch`, `studentEmail`, `studentContact`, `studentProfilePicture`, `studentFatherName`, `studentFatherContact`, `studentFatherEmail`, `studentFatherOccupation`, `studentFatherIncome`, `studentMotherName`, `studentMotherContact`, `studentMotherEmail`, `studentMotherOccupation`, `studentMotherIncome`, `studentLocalGuardianName`, `studentLocalGuardianContact`, `studentLocalGuardianEmail`, `studentLocalGuardianRelation`, `studentResidentType`, `studentLocalAddress`, `studentPermanentAddress`, `studentState`, `studentCity`, `studentPincode`, `studentHobbies`, `studentCreatedAt`, `studentUpdatedAt`)
+VALUES
+  (1, 'Sachin', 'PIET/CE/14/085', 2, '7 SEM', '7 CS-B', 'B2', '2014pietcssachin@poornima.org', '9024325912',
+      '/img/user.png', 'Father Name', '9024325912', 'sachinmeena.dev@gmail.com', 'defence', 1000000, 'Mother Name',
+                                      '9024325912', 'motheremail@gmail.com', 'house wifi', 10000000, NULL, NULL, NULL,
+                                                                                                           NULL,
+                                                                                                           'Hosteller',
+                                                                                                           NULL, NULL,
+                                                                                                           NULL, NULL,
+                                                                                                           302022, NULL,
+   '2017-09-12 13:43:27', '2017-09-12 05:58:14');
 
 -- --------------------------------------------------------
 
@@ -158,27 +188,35 @@ CREATE TABLE `students` (
 --
 
 CREATE TABLE `student_academics` (
-  `studentAcademicId` int(11) NOT NULL,
-  `studentAcademicStudentId` int(11) NOT NULL,
-  `studentAcademicSecPercentage` varchar(50) NOT NULL,
-  `studentAcademicSecBoard` varchar(50) NOT NULL,
-  `studentAcademicSecMedium` varchar(50) NOT NULL,
-  `studentAcademicSecSchoolName` varchar(50) NOT NULL,
-  `studentAcademicSrSecPercentage` varchar(50) NOT NULL,
-  `studentAcademicSrSecBoard` varchar(50) NOT NULL,
-  `studentAcademicSrSecMedium` varchar(50) NOT NULL,
-  `studentAcademicSrSecSchoolName` varchar(50) NOT NULL,
-  `studentAcademicDiplomaPercentage` varchar(50) DEFAULT NULL,
-  `studentAcademicDiplomaBoard` varchar(50) DEFAULT NULL,
-  `studentAcademicDiplomaMedium` varchar(50) DEFAULT NULL,
-  `studentAcademicDiplomaInstituteName` varchar(50) DEFAULT NULL,
-  `studentAcademicCollegeAgg` varchar(50) NOT NULL,
-  `studentAcademicCollegeBackCount` int(11) NOT NULL DEFAULT '0',
-  `studentAcademicCollegeBackSubject` varchar(50) DEFAULT NULL,
-  `studentAcademicHobbies` varchar(50) NOT NULL,
-  `studentAcademicCreatedAt` timestamp NULL DEFAULT NULL,
-  `studentAcademicUpdatedAt` timestamp NULL DEFAULT NULL
+  `studentAcademicId`         int(11) NOT NULL,
+  `studentAcademicStudentId`  INT(11)        DEFAULT NULL,
+  `studentAcademicPercentage` VARCHAR(50) NOT NULL,
+  `studentAcademicBoard`      VARCHAR(50) NOT NULL,
+  `studentAcademicMedium`     VARCHAR(50) NOT NULL,
+  `studentAcademicSchoolName` VARCHAR(50) NOT NULL,
+  `studentAcademicYOP`        DATE NOT NULL,
+  `studentAcademicCreatedAt`  timestamp NULL DEFAULT NULL,
+  `studentAcademicUpdatedAt`  timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_college_academics`
+--
+
+CREATE TABLE `student_college_academics` (
+  `studentCollegeAcademicId`              INT(11)   NOT NULL,
+  `studentCollegeAcademicStudentId`       INT(11)        DEFAULT NULL,
+  `studentCollegeAcademicSemester`        VARCHAR(10)    DEFAULT NULL,
+  `studentCollegeAcademicPercentage`      FLOAT          DEFAULT NULL,
+  `studentCollegeAcademicBackCount`       INT(11)        DEFAULT '0',
+  `studentCollegeAcademicBackSubjectCode` VARCHAR(50)    DEFAULT 'No Back Log',
+  `studentCollegeAcademicCreatedAt`       TIMESTAMP NULL DEFAULT NULL,
+  `studentCollegeAcademicUpdatedAt`       TIMESTAMP NULL DEFAULT NULL
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 -- --------------------------------------------------------
 
@@ -210,14 +248,22 @@ INSERT INTO `subjects` (`subjectId`, `subjectName`, `subjectAbbr`, `subjectCode`
 --
 
 CREATE TABLE `tutors` (
-  `tutorId` int(11) NOT NULL,
-  `tutorFacultyId` int(11) NOT NULL,
-  `tutorClass` varchar(5) NOT NULL,
-  `tutorSection` varchar(5) NOT NULL,
-  `tutorBatch` varchar(5) NOT NULL,
+  `tutorId`        int(11) NOT NULL,
+  `tutorFacultyId` INT(11)        DEFAULT NULL,
+  `tutorClass`     varchar(5) NOT NULL,
+  `tutorSection`   varchar(5) NOT NULL,
+  `tutorBatch`     varchar(5) NOT NULL,
   `tutorCreatedAt` timestamp NULL DEFAULT NULL,
   `tutorUpdatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tutors`
+--
+
+INSERT INTO `tutors` (`tutorId`, `tutorFacultyId`, `tutorClass`, `tutorSection`, `tutorBatch`, `tutorCreatedAt`, `tutorUpdatedAt`)
+VALUES
+  (1, 3, '3CS', '3CS-A', 'A1', '2017-09-11 01:58:41', '2017-09-11 01:58:46');
 
 -- --------------------------------------------------------
 
@@ -263,7 +309,9 @@ ALTER TABLE `faculty_members`
 -- Indexes for table `faculty_member_subjects`
 --
 ALTER TABLE `faculty_member_subjects`
-  ADD PRIMARY KEY (`fmsId`);
+  ADD PRIMARY KEY (`fmsId`),
+  ADD KEY `faculty_member_subjects_faculty_members_facultyMemberId_fk` (`fmsFacultyId`),
+  ADD KEY `faculty_member_subjects_subjects_subjectId_fk` (`fmsSubjectId`);
 
 --
 -- Indexes for table `roles`
@@ -282,7 +330,15 @@ ALTER TABLE `students`
 -- Indexes for table `student_academics`
 --
 ALTER TABLE `student_academics`
-  ADD PRIMARY KEY (`studentAcademicId`);
+  ADD PRIMARY KEY (`studentAcademicId`),
+  ADD KEY `student_academics_students_studentId_fk` (`studentAcademicStudentId`);
+
+--
+-- Indexes for table `student_college_academics`
+--
+ALTER TABLE `student_college_academics`
+  ADD PRIMARY KEY (`studentCollegeAcademicId`),
+  ADD KEY `student_college_academics_students_studentId_fk` (`studentCollegeAcademicStudentId`);
 
 --
 -- Indexes for table `subjects`
@@ -294,7 +350,8 @@ ALTER TABLE `subjects`
 -- Indexes for table `tutors`
 --
 ALTER TABLE `tutors`
-  ADD PRIMARY KEY (`tutorId`);
+  ADD PRIMARY KEY (`tutorId`),
+  ADD KEY `tutors_faculty_members_facultyMemberId_fk` (`tutorFacultyId`);
 
 --
 -- Indexes for table `users`
@@ -302,7 +359,8 @@ ALTER TABLE `tutors`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userId`),
   ADD UNIQUE KEY `users_userEmail_uindex` (`userEmail`),
-  ADD UNIQUE KEY `users_userUniqueId_uindex` (`userUniqueId`);
+  ADD UNIQUE KEY `users_userUniqueId_uindex` (`userUniqueId`),
+  ADD KEY `users_roles_roleId_fk` (`userRoleId`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -322,7 +380,8 @@ ALTER TABLE `faculty_members`
 -- AUTO_INCREMENT for table `faculty_member_subjects`
 --
 ALTER TABLE `faculty_member_subjects`
-  MODIFY `fmsId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `fmsId` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 2;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -332,12 +391,18 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `studentId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `studentId` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 2;
 --
 -- AUTO_INCREMENT for table `student_academics`
 --
 ALTER TABLE `student_academics`
   MODIFY `studentAcademicId` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `student_college_academics`
+--
+ALTER TABLE `student_college_academics`
+  MODIFY `studentCollegeAcademicId` INT(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
@@ -347,12 +412,60 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `tutors`
 --
 ALTER TABLE `tutors`
-  MODIFY `tutorId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tutorId` INT(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 2;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `faculty_member_subjects`
+--
+ALTER TABLE `faculty_member_subjects`
+  ADD CONSTRAINT `faculty_member_subjects_faculty_members_facultyMemberId_fk` FOREIGN KEY (`fmsFacultyId`) REFERENCES `faculty_members` (`facultyMemberId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE,
+  ADD CONSTRAINT `faculty_member_subjects_subjects_subjectId_fk` FOREIGN KEY (`fmsSubjectId`) REFERENCES `subjects` (`subjectId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_academics`
+--
+ALTER TABLE `student_academics`
+  ADD CONSTRAINT `student_academics_students_studentId_fk` FOREIGN KEY (`studentAcademicStudentId`) REFERENCES `students` (`studentId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_college_academics`
+--
+ALTER TABLE `student_college_academics`
+  ADD CONSTRAINT `student_college_academics_students_studentId_fk` FOREIGN KEY (`studentCollegeAcademicStudentId`) REFERENCES `students` (`studentId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tutors`
+--
+ALTER TABLE `tutors`
+  ADD CONSTRAINT `tutors_faculty_members_facultyMemberId_fk` FOREIGN KEY (`tutorFacultyId`) REFERENCES `faculty_members` (`facultyMemberId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_roles_roleId_fk` FOREIGN KEY (`userRoleId`) REFERENCES `roles` (`roleId`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

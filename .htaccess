@@ -18,3 +18,13 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+<Files .env>
+    Order allow,deny
+    Deny from all
+    ErrorDocument 403 /index.php
+</Files>
+<Files composer.json>
+    Order allow,deny
+    Deny from all
+    ErrorDocument 403 /index.php
+</Files>
